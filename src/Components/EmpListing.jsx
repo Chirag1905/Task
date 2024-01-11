@@ -13,25 +13,25 @@ const EmpListing = () => {
         navigate('/crud/edit/' + id)
     }
 
-    function getAllData() {
+    const getAllData = () => {
         fetch("http://localhost:5000/employ").then((res) => {
             return res.json();
         }).then((resp) => {
             empdatachange(resp);
         }).catch((err) => {
-            console.log(err.message);           
+            console.log(err.message);
         })
     }
 
     const Removefunction = (id) => {
         if (window.confirm('Do you want to remove?')) {
-            fetch("http://localhost:5000/employ", {
+            fetch(`http://localhost:5000/employ/` + id, {
                 method: 'DELETE',
                 headers: { "content-type": "application/json" },
-                body: JSON.stringify({ id }),
             }).then((res) => {
+                console.log(res, "DELETE")
                 alert('Removed successfully.')
-                getAllData()
+                getAllData();
             }).catch((err) => {
                 console.log(err.message);
             })
@@ -70,18 +70,18 @@ const EmpListing = () => {
                                         <td className='text-center'>{item.description}</td>
                                         <td className='text-center'>{item.cover}</td>
                                         <td className='text-center'>
-                                            <a onClick={() => { LoadDetail(item.id) }} > <span></span>
+                                            <button onClick={() => { LoadDetail(item.id) }} > <span></span>
                                                 <span></span>
                                                 <span></span>
-                                                <span></span>Show</a>
-                                            <a onClick={() => { LoadEdit(item.id) }} > <span></span>
+                                                <span></span>Show</button>
+                                            <button onClick={() => { LoadEdit(item.id) }} > <span></span>
                                                 <span></span>
                                                 <span></span>
-                                                <span></span>Edit</a>
-                                            <a onClick={() => { Removefunction(item.id) }} > <span></span>
+                                                <span></span>Edit</button>
+                                            <button onClick={() => { Removefunction(item.id) }} > <span></span>
                                                 <span></span>
                                                 <span></span>
-                                                <span></span>Delete</a>
+                                                <span></span>Delete</button>
                                         </td>
                                     </tr>
                                 ))
